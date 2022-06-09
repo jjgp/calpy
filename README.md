@@ -26,7 +26,7 @@ python -m pytest
 ```
 
 If using an environment that supports [devcontainers](https://github.com/microsoft/vscode-dev-containers)
-there is a configuration in the [.devcontainer](.devcontainer/devcontainer.json).
+there is a configuration in the [.devcontainer](.devcontainer/devcontainer.json) directory.
 
 ## Usage
 
