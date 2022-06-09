@@ -20,7 +20,7 @@ def postfix(expr):
     """
 
     i = 0
-    sign = 1
+    is_negative = False
     stack = []
     supported_operators = {
         "+": lambda x, y: x + y,
@@ -35,15 +35,20 @@ def postfix(expr):
         if c == " ":
             pass
         elif c == "_":
-            sign = -1
+            is_negative = True
+            stack.append(0)
         elif c.isdigit():
             num = 0
             while i < len(expr) and expr[i].isdigit():
                 num = 10 * num + int(expr[i])
                 i += 1
             i -= 1
-            stack.append(sign * num)
-            sign = 1
+
+            if is_negative:
+                stack[-1] = -num
+                is_negative = False
+            else:
+                stack.append(num)
         elif c in supported_operators:
             if len(stack) < 2:
                 raise ValueError("Expression resulted in empty stack")
