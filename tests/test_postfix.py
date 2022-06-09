@@ -48,7 +48,7 @@ def test_provided_examples():
     assert postfix("2 3 * 11 14 * +") == 160
 
 
-def test_no_space_after_operand():
+def test_no_space_around_operators():
     assert postfix("3 7*20-") == 1
 
 
