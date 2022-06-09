@@ -6,6 +6,18 @@ def infix(_):
 
 
 def postfix(expr):
+    """
+    Implements to evaluation of an mathematical expression by Reverse Polish notation.
+
+    For more:
+        https://en.wikipedia.org/wiki/Reverse_Polish_notation
+
+    :param expr: a string representing the expression to be evaluated
+    :returns: the resulting integer value
+    :raises ValueError: expressions resulting in empty stacks, for divison or
+    remainder by zero, and unsupported characters
+    """
+
     i = 0
     stack = []
     supported_operators = {
