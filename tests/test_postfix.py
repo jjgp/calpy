@@ -32,9 +32,27 @@ def test_invalid_number_of_operands():
         postfix("21 +")
 
 
-def test_postfix():
+def test_simple_expressions():
     assert postfix("21 21 +") == 42
     assert postfix("21 21 -") == 0
     assert postfix("0 1337 +") == 1337
     assert postfix("4 4 *") == 16
-    assert postfix("4 2 /") == 2
+    assert (
+        postfix("4 2 /") == 2
+    )  # TODO: will add test for intricacies of division and negatives
+    assert postfix("5 2 %") == 1
+
+
+def test_zero_edge_cases():
+    # TODO: division/modulo by zero, etc.
+    pass
+
+
+def test_negative_expressions():
+    # TODO: test truncation rules
+    pass
+
+
+def test_complex_expressions():
+    # TODO: all the things
+    pass
