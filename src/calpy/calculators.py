@@ -10,5 +10,9 @@ def postfix(expr):
             i = j
         elif expr[i] == "+":
             stack.append(stack.pop() + stack.pop())
+        elif expr[i] == " ":
+            continue
+        else:
+            raise ValueError("Expression contains unsupported character")
         i += 1
     return stack[-1]

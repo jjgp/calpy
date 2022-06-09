@@ -12,13 +12,22 @@ def test_parsing_numbers():
     # TODO: support of negative numbers? dc does not support this.
 
 
-def test_invalid_inputs():
+def test_invalid_empty():
     with pytest.raises(ValueError, match="Expression resulted in empty stack"):
         postfix("")
+
+
+def test_invalid_characters():
     with pytest.raises(ValueError, match="Expression contains unsupported character"):
         postfix("3 (╯°□°)╯︵ ┻━┻ 4")
+
+
+def test_invalid_without_operands():
     with pytest.raises(ValueError, match="Expression resulted in empty stack"):
         postfix("+")
+
+
+def test_invalid_number_of_operands():
     with pytest.raises(ValueError, match="Expression resulted in empty stack"):
         postfix("21 +")
 
