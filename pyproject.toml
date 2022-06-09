@@ -1,0 +1,11 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=61",
+    "wheel"
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]

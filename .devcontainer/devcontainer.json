@@ -1,0 +1,6 @@
+{
+  "image": "python:3.10@sha256:17e2d81e5757980ee40742d77dd5d3e1a69ad0d6dacb13064e1b018a6664ec72",
+  "extensions": ["ms-python.python"],
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "runArgs": ["--platform", "linux/amd64"]
+}
