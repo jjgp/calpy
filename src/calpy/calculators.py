@@ -23,6 +23,11 @@ def postfix(expr):
         elif c in supported_operators:
             if len(stack) < 2:
                 raise ValueError("Expression resulted in empty stack")
+            if c == "/" and stack[-1] == 0:
+                raise ValueError("Expression resulted in division by zero")
+            if c == "%" and stack[-1] == 0:
+                raise ValueError("Expression resulted in remainder by zero")
+
             y, x = stack.pop(), stack.pop()
             result = supported_operators[c](x, y)
             stack.append(result)

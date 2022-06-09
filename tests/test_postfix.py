@@ -43,9 +43,14 @@ def test_simple_expressions():
     assert postfix("5 2 %") == 1
 
 
-def test_zero_edge_cases():
-    # TODO: division/modulo by zero, etc.
-    pass
+def test_division_by_zero():
+    with pytest.raises(ValueError, match="Expression resulted in division by zero"):
+        postfix("4 0 /")
+
+
+def test_modulo_by_zero():
+    with pytest.raises(ValueError, match="Expression resulted in remainder by zero"):
+        postfix("4 0 %")
 
 
 def test_negative_expressions():
