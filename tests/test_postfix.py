@@ -9,7 +9,7 @@ def test_parsing_numbers():
     assert postfix("3 2 1") == 1
     assert postfix("     3") == 3
     assert postfix("   1337  ") == 1337
-    # TODO: support of negative numbers (i.e. "1 -3 +"")? dc does not support this.
+    assert postfix("_3") == -3
 
 
 def test_invalid_empty():
@@ -59,11 +59,11 @@ def test_modulo_by_zero():
 
 
 def test_negative_division():
-    assert postfix("0 5 - 2 /") == -2
+    assert postfix("_5 2 /") == -2
 
 
 def test_negative_modulo():
-    assert postfix("0 5 - 2 %") == -1
+    assert postfix("_ 5 2 %") == -1
 
 
 def test_complex_expressions():

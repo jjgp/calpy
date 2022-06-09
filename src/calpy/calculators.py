@@ -1,13 +1,41 @@
 import math
 
+_SUPPORTED_OPERATORS = {
+    "+": lambda x, y: x + y,
+    "-": lambda x, y: x - y,
+    "*": lambda x, y: x * y,
+    "/": lambda x, y: int(x / y),
+    "%": math.fmod,
+}
 
-def infix(_):
-    raise NotImplementedError("Infix notation is not yet supported")
+
+def _parse_int(expr, from_index):
+    to_index = from_index
+    while to_index < len(expr) and expr[to_index].isdigit():
+        to_index += 1
+    return to_index, int(expr[from_index:to_index])
+
+
+def infix(expr):
+    """
+    TODO: docstring
+    """
+
+    i = 0
+    while i < len(expr):
+        c = expr[i]
+
+        if c == " ":
+            pass
+        elif c.isdigit():
+            return _parse_int(expr, i)[1]
+
+        i += 1
 
 
 def postfix(expr):
     """
-    Implements to evaluation of an mathematical expression by Reverse Polish notation.
+    Evaluates a mathematical expression by Reverse Polish notation.
     The solution is both O(n) time and space complexity.
 
     For more:
@@ -21,26 +49,20 @@ def postfix(expr):
 
     i = 0
     stack = []
-    supported_operators = {
-        "+": lambda x, y: x + y,
-        "-": lambda x, y: x - y,
-        "*": lambda x, y: x * y,
-        "/": lambda x, y: int(x / y),
-        "%": math.fmod,
-    }
-
+    sign = 1
     while i < len(expr):
         c = expr[i]
 
         if c == " ":
             pass
+        elif c == "_":
+            sign = -1
         elif c.isdigit():
-            j = i
-            while j < len(expr) and expr[j].isdigit():
-                j += 1
-            stack.append(int(expr[i:j]))
-            i = j
-        elif c in supported_operators:
+            to_index, num = _parse_int(expr, i)
+            i = to_index
+            stack.append(sign * num)
+            sign = 1
+        elif c in _SUPPORTED_OPERATORS:
             if len(stack) < 2:
                 raise ValueError("Expression resulted in empty stack")
             if c == "/" and stack[-1] == 0:
@@ -49,7 +71,7 @@ def postfix(expr):
                 raise ValueError("Expression resulted in remainder by zero")
 
             y, x = stack.pop(), stack.pop()
-            result = supported_operators[c](x, y)
+            result = _SUPPORTED_OPERATORS[c](x, y)
             stack.append(result)
         else:
             raise ValueError("Expression contains unsupported character")
