@@ -1,36 +1,8 @@
 import math
 
-_SUPPORTED_OPERATORS = {
-    "+": lambda x, y: x + y,
-    "-": lambda x, y: x - y,
-    "*": lambda x, y: x * y,
-    "/": lambda x, y: int(x / y),
-    "%": math.fmod,
-}
 
-
-def _parse_int(expr, from_index):
-    to_index = from_index
-    while to_index < len(expr) and expr[to_index].isdigit():
-        to_index += 1
-    return to_index, int(expr[from_index:to_index])
-
-
-def infix(expr):
-    """
-    TODO: docstring
-    """
-
-    i = 0
-    while i < len(expr):
-        c = expr[i]
-
-        if c == " ":
-            pass
-        elif c.isdigit():
-            return _parse_int(expr, i)[1]
-
-        i += 1
+def infix(_):
+    raise NotImplementedError("Infix notation is not yet supported")
 
 
 def postfix(expr):
@@ -48,8 +20,15 @@ def postfix(expr):
     """
 
     i = 0
-    stack = []
     sign = 1
+    stack = []
+    supported_operators = {
+        "+": lambda x, y: x + y,
+        "-": lambda x, y: x - y,
+        "*": lambda x, y: x * y,
+        "/": lambda x, y: int(x / y),
+        "%": math.fmod,
+    }
     while i < len(expr):
         c = expr[i]
 
@@ -58,11 +37,14 @@ def postfix(expr):
         elif c == "_":
             sign = -1
         elif c.isdigit():
-            to_index, num = _parse_int(expr, i)
-            i = to_index
+            num = 0
+            while i < len(expr) and expr[i].isdigit():
+                num = 10 * num + int(expr[i])
+                i += 1
+            i -= 1
             stack.append(sign * num)
             sign = 1
-        elif c in _SUPPORTED_OPERATORS:
+        elif c in supported_operators:
             if len(stack) < 2:
                 raise ValueError("Expression resulted in empty stack")
             if c == "/" and stack[-1] == 0:
@@ -71,7 +53,7 @@ def postfix(expr):
                 raise ValueError("Expression resulted in remainder by zero")
 
             y, x = stack.pop(), stack.pop()
-            result = _SUPPORTED_OPERATORS[c](x, y)
+            result = supported_operators[c](x, y)
             stack.append(result)
         else:
             raise ValueError("Expression contains unsupported character")

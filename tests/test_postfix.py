@@ -48,6 +48,10 @@ def test_provided_examples():
     assert postfix("2 3 * 11 14 * +") == 160
 
 
+def test_no_space_after_operand():
+    assert postfix("3 7*20-") == 1
+
+
 def test_division_by_zero():
     with pytest.raises(ValueError, match="Expression resulted in division by zero"):
         postfix("4 0 /")
