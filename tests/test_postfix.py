@@ -41,6 +41,13 @@ def test_simple_expressions():
     assert postfix("5 2 %") == 1
 
 
+def test_provided_examples():
+    assert postfix("5 2 /") == 2
+    assert postfix("3 7 *") == 21
+    assert postfix("4 7 + 2 *") == 22
+    assert postfix("2 3 * 11 14 * +") == 160
+
+
 def test_division_by_zero():
     with pytest.raises(ValueError, match="Expression resulted in division by zero"):
         postfix("4 0 /")

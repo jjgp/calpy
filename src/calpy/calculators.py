@@ -8,6 +8,7 @@ def infix(_):
 def postfix(expr):
     """
     Implements to evaluation of an mathematical expression by Reverse Polish notation.
+    The solution is both O(n) time and space complexity.
 
     For more:
         https://en.wikipedia.org/wiki/Reverse_Polish_notation
