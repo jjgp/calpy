@@ -34,3 +34,5 @@ def test_invalid_number_of_operands():
 
 def test_postfix():
     assert postfix("21 21 +") == 42
+    assert postfix("21 21 -") == 0
+    assert postfix("0 1337 +") == 1337

@@ -1,7 +1,10 @@
 def postfix(expr):
     i = 0
     stack = []
-    supported_operators = {"+": lambda x, y: x + y}
+    supported_operators = {
+        "+": lambda x, y: x + y,
+        "-": lambda x, y: x - y,
+    }
 
     while i < len(expr):
         c = expr[i]
