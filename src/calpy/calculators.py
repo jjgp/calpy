@@ -1,6 +1,10 @@
 import math
 
 
+def infix(_):
+    raise NotImplementedError("Infix notation is not yet supported")
+
+
 def postfix(expr):
     i = 0
     stack = []
