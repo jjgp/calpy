@@ -62,6 +62,13 @@ def test_modulo_by_zero():
         postfix("4 0 %")
 
 
+def test_negative_sign():
+    assert postfix("_5") == -5
+    assert postfix("_ 5") == -5
+    assert postfix("5_") == 5
+    assert postfix("4 5_+") == 9  # TODO: this would be 5 with dc
+
+
 def test_negative_division():
     assert postfix("_5 2 /") == -2
 
