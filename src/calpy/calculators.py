@@ -5,12 +5,15 @@ def postfix(expr):
         "+": lambda x, y: x + y,
         "-": lambda x, y: x - y,
         "*": lambda x, y: x * y,
+        "/": lambda x, y: x / y,
     }
 
     while i < len(expr):
         c = expr[i]
 
-        if c.isdigit():
+        if c == " ":
+            pass
+        elif c.isdigit():
             j = i
             while j < len(expr) and expr[j].isdigit():
                 j += 1
@@ -22,10 +25,9 @@ def postfix(expr):
             y, x = stack.pop(), stack.pop()
             result = supported_operators[c](x, y)
             stack.append(result)
-        elif c == " ":
-            pass
         else:
             raise ValueError("Expression contains unsupported character")
+
         i += 1
 
     if not stack:

@@ -37,3 +37,4 @@ def test_postfix():
     assert postfix("21 21 -") == 0
     assert postfix("0 1337 +") == 1337
     assert postfix("4 4 *") == 16
+    assert postfix("4 2 /") == 2
