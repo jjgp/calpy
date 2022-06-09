@@ -9,7 +9,7 @@ def test_parsing_numbers():
     assert postfix("3 2 1") == 1
     assert postfix("     3") == 3
     assert postfix("   1337  ") == 1337
-    # TODO: support of negative numbers? dc does not support this.
+    # TODO: support of negative numbers (i.e. "1 -3 +"")? dc does not support this.
 
 
 def test_invalid_empty():
@@ -37,9 +37,7 @@ def test_simple_expressions():
     assert postfix("21 21 -") == 0
     assert postfix("0 1337 +") == 1337
     assert postfix("4 4 *") == 16
-    assert (
-        postfix("4 2 /") == 2
-    )  # TODO: will add test for intricacies of division and negatives
+    assert postfix("4 2 /") == 2
     assert postfix("5 2 %") == 1
 
 
@@ -53,9 +51,12 @@ def test_modulo_by_zero():
         postfix("4 0 %")
 
 
-def test_negative_expressions():
-    # TODO: test truncation rules
-    pass
+def test_negative_division():
+    assert postfix("0 5 - 2 /") == -2
+
+
+def test_negative_modulo():
+    assert postfix("0 5 - 2 %") == -1
 
 
 def test_complex_expressions():
