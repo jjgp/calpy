@@ -39,5 +39,5 @@ calpy --postfix "21 21 +"
 For infix notation:
 
 ```
-calpy --infix "21 21 +"
+calpy --infix "21 + 21"
 ```
