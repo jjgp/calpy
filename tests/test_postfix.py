@@ -60,5 +60,11 @@ def test_negative_modulo():
 
 
 def test_complex_expressions():
-    # TODO: all the things
-    pass
+    assert postfix("0 5 - 2 % 100 * 1337 + 42 54 + /") == 12
+
+
+def test_fuzzing_expressions():
+    """
+    TODO: if this was a very secure and mission critical service it would be nice
+    to generate or fuzz expressions to check for errors or validity
+    """
