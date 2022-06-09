@@ -7,7 +7,7 @@ def infix(_):
 
 def postfix(expr):
     """
-    Implements to evaluation of an mathematical expression by Reverse Polish notation.
+    Evaluates a mathematical expression by Reverse Polish notation.
     The solution is both O(n) time and space complexity.
 
     For more:
@@ -20,6 +20,7 @@ def postfix(expr):
     """
 
     i = 0
+    is_negative = False
     stack = []
     supported_operators = {
         "+": lambda x, y: x + y,
@@ -28,18 +29,26 @@ def postfix(expr):
         "/": lambda x, y: int(x / y),
         "%": math.fmod,
     }
-
     while i < len(expr):
         c = expr[i]
 
         if c == " ":
             pass
+        elif c == "_":
+            is_negative = True
+            stack.append(0)
         elif c.isdigit():
-            j = i
-            while j < len(expr) and expr[j].isdigit():
-                j += 1
-            stack.append(int(expr[i:j]))
-            i = j
+            num = 0
+            while i < len(expr) and expr[i].isdigit():
+                num = 10 * num + int(expr[i])
+                i += 1
+            i -= 1
+
+            if is_negative:
+                stack[-1] = -num
+                is_negative = False
+            else:
+                stack.append(num)
         elif c in supported_operators:
             if len(stack) < 2:
                 raise ValueError("Expression resulted in empty stack")

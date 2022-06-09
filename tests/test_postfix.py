@@ -9,7 +9,7 @@ def test_parsing_numbers():
     assert postfix("3 2 1") == 1
     assert postfix("     3") == 3
     assert postfix("   1337  ") == 1337
-    # TODO: support of negative numbers (i.e. "1 -3 +"")? dc does not support this.
+    assert postfix("_3") == -3
 
 
 def test_invalid_empty():
@@ -48,22 +48,39 @@ def test_provided_examples():
     assert postfix("2 3 * 11 14 * +") == 160
 
 
+def test_no_space_after_operand():
+    assert postfix("3 7*20-") == 1
+
+
+def test_negative_sign():
+    assert postfix("_5") == -5
+    assert postfix("_ 5") == -5
+    assert postfix("5_") == 0
+    assert postfix("4 5_+") == 5
+
+
 def test_division_by_zero():
     with pytest.raises(ValueError, match="Expression resulted in division by zero"):
         postfix("4 0 /")
+
+    with pytest.raises(ValueError, match="Expression resulted in division by zero"):
+        postfix("4 _ /")
 
 
 def test_modulo_by_zero():
     with pytest.raises(ValueError, match="Expression resulted in remainder by zero"):
         postfix("4 0 %")
 
+    with pytest.raises(ValueError, match="Expression resulted in remainder by zero"):
+        postfix("4 _ %")
+
 
 def test_negative_division():
-    assert postfix("0 5 - 2 /") == -2
+    assert postfix("_5 2 /") == -2
 
 
 def test_negative_modulo():
-    assert postfix("0 5 - 2 %") == -1
+    assert postfix("_ 5 2 %") == -1
 
 
 def test_complex_expressions():
