@@ -1,6 +1,6 @@
 # calpy
 
-A calculator in python
+A calculator in Python
 
 ## Getting started
 
