@@ -1,3 +1,6 @@
+import math
+
+
 def postfix(expr):
     i = 0
     stack = []
@@ -5,8 +8,8 @@ def postfix(expr):
         "+": lambda x, y: x + y,
         "-": lambda x, y: x - y,
         "*": lambda x, y: x * y,
-        "/": lambda x, y: x / y,
-        "%": lambda x, y: x % y,
+        "/": lambda x, y: int(x / y),
+        "%": math.fmod,
     }
 
     while i < len(expr):
