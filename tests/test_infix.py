@@ -74,13 +74,11 @@ def test_modulo_by_zero():
 
 
 def test_negative_division():
-    # TODO: this is currently unsupported
-    pass
+    assert infix("-5 / 2 ") == -2
 
 
 def test_negative_modulo():
-    # TODO: this is currently unsupported
-    pass
+    assert infix("-5 % 2 ") == -1
 
 
 def test_complex_expressions():
