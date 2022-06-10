@@ -64,6 +64,7 @@ def test_negative_sign():
     assert infix("3 * - 2") == -6
     assert infix("- 3 * - 2") == 6
     assert infix("- 3  - - (-2) - 5") == -10
+    assert infix("((1 - 5))") == -4
 
 
 def test_division_by_zero():

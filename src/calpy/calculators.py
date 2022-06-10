@@ -80,6 +80,7 @@ def infix(expr):
                 _apply_operator(ops.pop(), outputs)
             ops.pop()
         elif c == "-" and len(outputs) <= len(ops):
+            # TODO: this fails for ((1 - 5))
             sign *= -1
         else:
             precedence = _OPS_PRECEDENCE[c]
