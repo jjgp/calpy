@@ -94,6 +94,8 @@ def infix(expr):
 
     if not outputs:
         raise ValueError("Expression resulted in empty stack")
+    if len(outputs) > 1:
+        raise ValueError("Expression resulted in a parse error")
 
     return outputs[-1]
 

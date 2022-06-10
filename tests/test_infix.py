@@ -5,8 +5,6 @@ from calpy.calculators import infix
 
 def test_parsing_numbers():
     assert infix("3") == 3
-    assert infix("3    2") == 2
-    assert infix("3 2 1") == 1
     assert infix("     3") == 3
     assert infix("   1337  ") == 1337
     assert infix("-3") == -3
@@ -30,6 +28,11 @@ def test_invalid_without_operands():
 def test_invalid_number_of_operands():
     with pytest.raises(ValueError, match="Expression resulted in empty stack"):
         infix("21 +")
+
+
+def test_multiple_invalid_number_of_operands():
+    with pytest.raises(ValueError, match="Expression resulted in a parse error"):
+        infix("21 21 +")
 
 
 def test_simple_expressions():
