@@ -21,19 +21,19 @@ _OPS_PRECEDENCE = defaultdict(
 )
 
 
-def _apply_operator(op, operands):
+def _apply_operator(op, outputs):
     if op not in _OPS_SUPPORTED:
         raise ValueError("Expression contains unsupported character")
-    elif len(operands) < 2:
+    elif len(outputs) < 2:
         raise ValueError("Expression resulted in empty stack")
-    elif op == "/" and operands[-1] == 0:
+    elif op == "/" and outputs[-1] == 0:
         raise ValueError("Expression resulted in division by zero")
-    elif op == "%" and operands[-1] == 0:
+    elif op == "%" and outputs[-1] == 0:
         raise ValueError("Expression resulted in remainder by zero")
 
-    y, x = operands.pop(), operands.pop()
+    y, x = outputs.pop(), outputs.pop()
     result = _OPS_SUPPORTED[op](x, y)
-    operands.append(result)
+    outputs.append(result)
 
 
 def _parse_num(expr, from_index):
@@ -61,37 +61,41 @@ def infix(expr):
 
     i = 0
     ops = []
-    operands = []
+    outputs = []
+    sign = 1
 
     while i < len(expr):
         c = expr[i]
 
         if c == " ":
             pass
-        elif c == "(":
-            ops.append(c)
         elif c.isdigit():
             num, i = _parse_num(expr, i)
-            operands.append(num)
+            outputs.append(sign * num)
+            sign = 1
+        elif c == "(":
+            ops.append(c)
         elif c == ")":
             while ops and ops[-1] != "(":
-                _apply_operator(ops.pop(), operands)
+                _apply_operator(ops.pop(), outputs)
             ops.pop()
+        elif c == "-" and len(outputs) <= len(ops):
+            sign *= -1
         else:
             precedence = _OPS_PRECEDENCE[c]
-            while ops and (_OPS_PRECEDENCE[ops[-1]] >= precedence):
-                _apply_operator(ops.pop(), operands)
+            while ops and precedence <= _OPS_PRECEDENCE[ops[-1]]:
+                _apply_operator(ops.pop(), outputs)
             ops.append(c)
 
         i += 1
 
     while ops:
-        _apply_operator(ops.pop(), operands)
+        _apply_operator(ops.pop(), outputs)
 
-    if not operands:
+    if not outputs:
         raise ValueError("Expression resulted in empty stack")
 
-    return operands[-1]
+    return outputs[-1]
 
 
 def postfix(expr):
@@ -110,30 +114,30 @@ def postfix(expr):
 
     i = 0
     is_negative = False
-    operands = []
+    outputs = []
 
     while i < len(expr):
         c = expr[i]
 
         if c == " ":
             pass
-        elif c == "_":
-            is_negative = True
-            operands.append(0)
         elif c.isdigit():
             num, i = _parse_num(expr, i)
 
             if is_negative:
-                operands[-1] = -num
+                outputs[-1] = -num
                 is_negative = False
             else:
-                operands.append(num)
+                outputs.append(num)
+        elif c == "_":
+            is_negative = True
+            outputs.append(0)
         else:
-            _apply_operator(c, operands)
+            _apply_operator(c, outputs)
 
         i += 1
 
-    if not operands:
+    if not outputs:
         raise ValueError("Expression resulted in empty stack")
 
-    return operands[-1]
+    return outputs[-1]

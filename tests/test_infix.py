@@ -9,8 +9,7 @@ def test_parsing_numbers():
     assert infix("3 2 1") == 1
     assert infix("     3") == 3
     assert infix("   1337  ") == 1337
-    # TODO: the following currently unsupported
-    # assert infix("-3") == -3
+    assert infix("-3") == -3
 
 
 def test_invalid_empty():
@@ -39,9 +38,7 @@ def test_simple_expressions():
     assert infix("0 + 1337") == 1337
     assert infix("4 * 4") == 16
     assert infix("4 / 2") == 2
-
-    # TODO: the following is supported by  bc <<< "5 / - 4"
-    # assert infix("5 / - 4") == 1
+    assert infix("5 / - 4") == -1
 
 
 def test_provided_examples():
@@ -56,8 +53,13 @@ def test_no_space_around_operators():
 
 
 def test_negative_sign():
-    # TODO: this is currently unsupported
-    pass
+    assert infix("- - 3") == 3
+    assert infix("- (3)") == -3
+    assert infix("(- 3)") == -3
+    assert infix("1 + (- 3)") == -2
+    assert infix("- 3 * 2") == -6
+    assert infix("3 * - 2") == -6
+    assert infix("- 3 * - 2") == 6
 
 
 def test_division_by_zero():
